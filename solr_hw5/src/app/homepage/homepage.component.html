@@ -1,0 +1,63 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+
+
+
+
+<div class="container">
+  <br/>
+  <div class="radio text-center mt-5 mb-3">
+    <label class="radio-inline"><input type="radio" name="optradio" [(ngModel)]="myRadio" value="lucene">Lucene</label>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <label class="radio-inline"><input type="radio" name="optradio" [(ngModel)]="myRadio" value="rank">Page rank</label>
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-10 col-lg-8">
+      <form class="card card-sm">
+        <div class="card-body row no-gutters align-items-center">
+          <div class="col-auto">
+            <i class="fas fa-search h4 text-body"></i>
+          </div>
+          <!--end of col-->
+          <div class="col">
+            <input class="form-control form-control-lg form-control-borderless" type="search" placeholder="Search topics or keywords" [formControl]="myControl" [matAutocomplete]="auto" name="search-box">
+
+            <mat-autocomplete #auto="matAutocomplete">
+              <ng-container *ngIf="!loadingSuggest">
+                <mat-option *ngFor="let option of suggestionList" [value]="option.term">
+                  {{option.term}}
+                </mat-option>
+              </ng-container>
+            </mat-autocomplete>
+
+          </div>
+          <!--end of col-->
+          <div class="col-auto">
+            <button class="btn btn-lg btn-success" type="submit" (click)="solrSearch()">Search</button>
+          </div>
+          <!--end of col-->
+        </div>
+      </form>
+    </div>
+    <!--end of col-->
+  </div>
+</div>
+
+<div class="alert alert-warning container mt-5" role="alert" *ngIf="noResultFlag">
+  <p>
+    No results for: <span id="search-word">{{myControl.value}}</span>
+  </p>
+  <p>
+    You can try with: <span id="recommend-word">{{recommendWord}}</span>
+  </p>
+</div>
+
+<div *ngFor="let doc of docList" class="container mt-5">
+  <app-doc-card [doc]=doc></app-doc-card>
+</div>
+

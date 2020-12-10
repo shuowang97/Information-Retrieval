@@ -1,0 +1,10 @@
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-text mb-2"><a href="{{doc.og_url}}" target="_blank" id="card-title">{{doc.title}}</a></h4>
+    <div class="card-text mb-1"><a class="text-success" href="{{doc.og_url}}" target="_blank">{{doc.og_url}}</a></div>
+    <p class="card-text text-info mb-4">{{doc.id}}</p>
+    <p class="card-text text-muted" *ngIf="doc.description !== undefined">{{doc.description}}</p>
+    <p class="card-text text-muted" *ngIf="doc.description === undefined">N/A</p>
+
+  </div>
+</div>
